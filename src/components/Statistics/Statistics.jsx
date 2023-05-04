@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import css from './Statistics.module.css';
 
 export default Statistics;
 
@@ -14,7 +15,7 @@ function Statistics(props) {
   const { good, neutral, bad, total, positivePercentage } = props;
 
   return (
-    <ul className="statistics">
+    <ul className={css.statistics}>
       <li className="stat-item">
         Good: <span className="count">{good}</span>
       </li>
