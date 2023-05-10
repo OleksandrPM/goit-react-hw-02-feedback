@@ -13,7 +13,7 @@ function FeedbackOptions({ options, onLeaveFeedbackClick }) {
     <ul className={css.feedback_buttons}>
       {options.map(option => {
         return (
-          <li className="feedback-btn" key={option}>
+          <li key={option}>
             <button
               type="button"
               className={css.btn}
