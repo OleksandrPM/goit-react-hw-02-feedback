@@ -11,41 +11,36 @@ class App extends Component {
     bad: 0,
   };
 
-  onButtonClick = event => {
-    const btnId = event.target.id;
-    this.incrementCount(btnId);
-  };
-
   incrementCount = btnId => {
     this.setState(prevState => {
-      if (btnId === 'good') {
-        return { good: prevState.good + 1 };
-      }
-      if (btnId === 'neutral') {
-        return { neutral: prevState.neutral + 1 };
-      }
-      if (btnId === 'bad') {
-        return { bad: prevState.bad + 1 };
-      }
+      return { [btnId]: prevState[btnId] + 1 };
     });
   };
 
-  countTotalFeedback() {
+  countTotalFeedback = () => {
     const keys = Object.keys(this.state);
     return keys.reduce((acc, current) => acc + this.state[current], 0);
-  }
+  };
 
-  countPositiveFeedbackPercentage() {
+  countPositiveFeedbackPercentage = () => {
     if (this.countTotalFeedback() !== 0) {
       return Math.round((this.state.good / this.countTotalFeedback()) * 100);
     } else {
       return 0;
     }
-  }
+  };
 
   render() {
-    const totalCount = this.countTotalFeedback();
-    const positivePercentage = this.countPositiveFeedbackPercentage();
+    const {
+      state,
+      state: { good, neutral, bad },
+      incrementCount,
+      countTotalFeedback,
+      countPositiveFeedbackPercentage,
+    } = this;
+
+    const totalCount = countTotalFeedback();
+    const positivePercentage = countPositiveFeedbackPercentage();
 
     return (
       <div className="app">
@@ -53,8 +48,8 @@ class App extends Component {
           title="Please leave feedback"
           children={
             <FeedbackOptions
-              options={Object.keys(this.state)}
-              onLeaveFeedback={this.onButtonClick}
+              options={Object.keys(state)}
+              onLeaveFeedbackClick={incrementCount}
             />
           }
         />
@@ -64,9 +59,9 @@ class App extends Component {
           children={
             totalCount > 0 ? (
               <Statistics
-                good={this.state.good}
-                neutral={this.state.neutral}
-                bad={this.state.bad}
+                good={good}
+                neutral={neutral}
+                bad={bad}
                 total={totalCount}
                 positivePercentage={positivePercentage}
               />

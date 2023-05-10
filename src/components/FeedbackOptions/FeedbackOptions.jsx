@@ -4,11 +4,11 @@ import css from './FeedbackOptions.module.css';
 export default FeedbackOptions;
 
 FeedbackOptions.propTypes = {
-  options: PropTypes.array,
+  options: PropTypes.array.isRequired,
   onLeaveFeedback: PropTypes.func,
 };
 
-function FeedbackOptions({ options, onLeaveFeedback }) {
+function FeedbackOptions({ options, onLeaveFeedbackClick }) {
   return (
     <ul className={css.feedback_buttons}>
       {options.map(option => {
@@ -17,8 +17,7 @@ function FeedbackOptions({ options, onLeaveFeedback }) {
             <button
               type="button"
               className={css.btn}
-              id={option}
-              onClick={onLeaveFeedback}
+              onClick={() => onLeaveFeedbackClick(option)}
             >
               {uppercaseFirstLetter(option)}
             </button>
